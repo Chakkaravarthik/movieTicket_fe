@@ -28,7 +28,7 @@ function BarHeading( {handleLogout}) {
         
     }, [])
 
-    console.log(customerdata);
+  
 
     const ticketpoping =()=>{
         setticketpopup(true);
@@ -108,7 +108,7 @@ const Companylogo = () => {
 
 const CustomerLoginIcon = ({customerdata , handleLogout , ticketpoping}) => {
 
-    console.log(customerdata)
+
 
     return (
         <div className="container-fluid d-flex flex-row-reverse p-2">

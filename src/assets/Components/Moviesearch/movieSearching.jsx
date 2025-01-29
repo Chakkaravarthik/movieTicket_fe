@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { movieget } from "../../Apis/movieapi/movieapi.js";
+import Checkout from "../checkout_page/checkout.jsx";
+import { jwtDecode } from "jwt-decode";
 
 
 const MovieList = () => {
@@ -7,6 +9,8 @@ const MovieList = () => {
     const [moviedatas, setmoviedatas] = useState([]);
 
     const [moviePopUp, setmoviePopUp] = useState(null);
+
+    const [customerobj, setcustomerobj] = useState({});
 
     const popmovie = (data) => {
         setmoviePopUp(data);
@@ -18,21 +22,36 @@ const MovieList = () => {
 
     //console.log(moviedatas);
 
-    const loadMovie = async ()=>{
+    const loadMovie = async () => {
         let data = await movieget();
-        if(data.code==1){
+        if (data.code == 1) {
             setmoviedatas(data.movies);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         loadMovie();
-    },[])
+
+        const updateAdminStatus = async () => {
+            const userToken = localStorage.getItem('UserToken');
+            if (userToken) {
+                const userDetails = await jwtDecode(userToken);
+                setcustomerobj(userDetails);
+
+            } else {
+                setcustomerobj({});
+            }
+        };
+
+        updateAdminStatus();
+
+
+    }, [])
 
     return (
         <>
             < MovieCards moviedatas={moviedatas} popmovie={popmovie} />
-            {moviePopUp && <MoviePop img={moviePopUp.movieimg} closepop={closepop} />}
+            {moviePopUp && <MoviePop moviePopUp={moviePopUp} closepop={closepop} customerobj={customerobj} />}
         </>
     )
 };
@@ -41,7 +60,6 @@ export default MovieList;
 
 
 const MovieCards = ({ moviedatas, popmovie }) => {
-    console.log(moviedatas);
 
     return (
         <>
@@ -73,8 +91,15 @@ const MovieCard = ({ moviedata, popmovie }) => {
 
 
 
-const MoviePop = ({ img, closepop }) => {
+const MoviePop = ({ moviePopUp, closepop, customerobj }) => {
+
     const [count, setCount] = useState(0);
+    const [mountrazorpay, setmountrazorpay] = useState(false);
+    const [payableAmount, setpayableamount] = useState(0);
+
+    const mountingrazorpay = () => {
+        setmountrazorpay(true);
+    }
 
     const incrementCount = () => setCount(count + 1);
     const decrementCount = () => setCount(count > 0 ? count - 1 : 0);
@@ -91,6 +116,13 @@ const MoviePop = ({ img, closepop }) => {
         alignItems: "center",
         zIndex: 1000,
     };
+
+
+
+    useEffect(() => {
+        setpayableamount(count * moviePopUp.movieticketprice);
+    }, [count, moviePopUp]);
+    
 
     return (
         <div style={popupOverlayStyle}>
@@ -115,7 +147,7 @@ const MoviePop = ({ img, closepop }) => {
                 {/* Movie Image */}
                 <div className="me-3">
                     <img
-                        src={img}
+                        src={moviePopUp.movieimg}
                         className="img-fluid rounded-start p-2"
                         alt="Movie Poster"
                         style={{ maxHeight: "60vh", maxWidth: "60vw" }}
@@ -123,22 +155,30 @@ const MoviePop = ({ img, closepop }) => {
                 </div>
 
                 {/* Ticket Counter Section */}
-                <div className="d-flex flex-column align-items-center">
-                    <p><b>Ticket Price is Rs 100 </b></p>
-                    <p className="fs-5">No of Tickets</p>
+                <div className="d-flex flex-column align-items-center card-body shadow-sm">
+                    <p className="fs-4 "><b>{`Movie Name : ${moviePopUp.moviename}`}</b></p>
+                    <p className="fs-4"><b>{`Ticket Price Rs : ${moviePopUp.movieticketprice}`}</b></p>
+                    <p className="fs-5"><b>No of Tickets</b></p>
                     <div className="d-flex align-items-center">
                         <button
-                            className="btn btn-danger m-2"
+                            className="btn btn-light m-3 mx-4"
                             onClick={decrementCount}
                             disabled={count === 0}
                         >
                             -
                         </button>
-                        <span className="fs-4">{count}</span>
-                        <button className="btn btn-success m-2" onClick={incrementCount}>
+                        <span className="fs-4 mx-4">{count}</span>
+                        <button className="btn btn-light m-2 mx-4" onClick={incrementCount}>
                             +
                         </button>
                     </div>
+                    <p className="fs-5 m-2 mx-4">
+                        <b>Amount Payable (Rs) : {count * moviePopUp.movieticketprice}</b>
+                    </p>
+                    <button className="btn btn-primary fs-5 m-2 mx-4" onClick={mountingrazorpay}>
+                        Proceed To Pay
+                    </button>
+                    {mountrazorpay && payableAmount > 0 && <Checkout amount={payableAmount} customerobj={customerobj} />}
                 </div>
             </div>
         </div>
