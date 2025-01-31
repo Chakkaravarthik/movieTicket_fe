@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import LoginComponent from "./assets/Components/Authentication/Login.jsx";
 import TheaterRegistrationForm from "./assets/Components/theater/Theatercreation/theatercreation.jsx";
-import TicketBooking from "./assets/Components/tikcetBookingPage/ticketBooking.jsx";
+//import TicketBooking from "./assets/Components/tikcetBookingPage/ticketBooking.jsx";
 import RegisterForm from './assets/Components/Authentication/register.jsx';
 import HomeComponent from './assets/Components/home/home.jsx';
 //import {Spinner , loadspinner, stopspinner} from './assets/Components/spinner/spinner.jsx'
@@ -75,7 +75,7 @@ function App() {
         {isAuthenticated && !isAdmin && (
           <>
             <Route path="/home" element={<HomeComponent handleLogout={handleLogout} />} />
-            <Route path="/book-tickets" element={<TicketBooking />} />
+            {/* <Route path="/book-tickets" element={<TicketBooking />} /> */}
           </>
         )}
 

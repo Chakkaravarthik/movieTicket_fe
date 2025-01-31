@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { movieget } from "../../Apis/movieapi/movieapi.js";
 import Checkout from "../checkout_page/checkout.jsx";
 import { jwtDecode } from "jwt-decode";
+import Ticketcreation from "../ticket/ticketcreation.jsx";
+
 
 
 const MovieList = () => {
@@ -11,6 +13,10 @@ const MovieList = () => {
     const [moviePopUp, setmoviePopUp] = useState(null);
 
     const [customerobj, setcustomerobj] = useState({});
+
+    const [popticket, setpopticket]=useState(false);
+
+    const [ticketbookeddata, setticketbookeddata]=useState({});
 
     const popmovie = (data) => {
         setmoviePopUp(data);
@@ -50,8 +56,9 @@ const MovieList = () => {
 
     return (
         <>
-            < MovieCards moviedatas={moviedatas} popmovie={popmovie} />
-            {moviePopUp && <MoviePop moviePopUp={moviePopUp} closepop={closepop} customerobj={customerobj} />}
+            < MovieCards moviedatas={moviedatas} popmovie={popmovie} popticket={popticket}/>
+            {moviePopUp && <MoviePop moviePopUp={moviePopUp} closepop={closepop} customerobj={customerobj} setpopticket={setpopticket} setticketbookeddata={setticketbookeddata}/>}
+            {popticket && <Ticketcreation ele={ticketbookeddata} />}
         </>
     )
 };
@@ -59,7 +66,7 @@ const MovieList = () => {
 export default MovieList;
 
 
-const MovieCards = ({ moviedatas, popmovie }) => {
+const MovieCards = ({ moviedatas, popmovie ,}) => {
 
     return (
         <>
@@ -73,7 +80,7 @@ const MovieCards = ({ moviedatas, popmovie }) => {
 }
 
 
-const MovieCard = ({ moviedata, popmovie }) => {
+const MovieCard = ({ moviedata, popmovie, }) => {
 
     //console.log(moviedata)
 
@@ -91,11 +98,12 @@ const MovieCard = ({ moviedata, popmovie }) => {
 
 
 
-const MoviePop = ({ moviePopUp, closepop, customerobj }) => {
+const MoviePop = ({ moviePopUp, closepop, customerobj , setpopticket ,setticketbookeddata}) => {
 
     const [count, setCount] = useState(0);
     const [mountrazorpay, setmountrazorpay] = useState(false);
     const [payableAmount, setpayableamount] = useState(0);
+    
 
     const mountingrazorpay = () => {
         setmountrazorpay(true);
@@ -178,7 +186,7 @@ const MoviePop = ({ moviePopUp, closepop, customerobj }) => {
                     <button className="btn btn-primary fs-5 m-2 mx-4" onClick={mountingrazorpay}>
                         Proceed To Pay
                     </button>
-                    {mountrazorpay && payableAmount > 0 && <Checkout amount={payableAmount} customerobj={customerobj} />}
+                    {mountrazorpay && payableAmount > 0 && <Checkout amount={payableAmount} customerobj={customerobj} moviePopUp={moviePopUp} closepop={closepop} count={count}  setpopticket={setpopticket} setticketbookeddata={setticketbookeddata} />}
                 </div>
             </div>
         </div>
