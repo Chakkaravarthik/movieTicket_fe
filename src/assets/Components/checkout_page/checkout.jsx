@@ -22,7 +22,7 @@ const Checkout = ({ amount, customerobj ,moviePopUp , count , closepop ,  setpop
         description: "Movie Ticket Purchase",
         order_id: order.id,
         handler: async function (response) {
-          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+          //alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
           let ticketdata ={
             ...moviePopUp,response, count,customerobj
           }

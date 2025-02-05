@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import { userlist } from "../../Apis/authapi/login";
 
 
 const TicketPopUp = ({ blockticketpoping }) => {
@@ -13,16 +14,29 @@ const TicketPopUp = ({ blockticketpoping }) => {
     useEffect(() => {
         const updateAdminStatus = async () => {
             const userToken = localStorage.getItem('UserToken');
-            if (userToken) {
+
+            const response = await userlist();
+
+            if (response && userToken) {
+
                 const userDetails = await jwtDecode(userToken);
                 setcustomerdata(userDetails);
-                
-                setticketarr(userDetails.tickets.flat());
 
-            } else {
+                response.userlist.forEach((e) => {
+                    if(e.id === userDetails.id){
+                        setticketarr(e.tickets.flat());
+                    }
+                });
+                
+            }else {
                 setcustomerdata('');
             }
+            
+
+  
         };
+
+        
 
 
         window.addEventListener('storage', updateAdminStatus);

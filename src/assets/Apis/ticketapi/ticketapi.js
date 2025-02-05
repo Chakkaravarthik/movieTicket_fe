@@ -1,8 +1,4 @@
-//const url = import.meta.env.VITE_LOCAL_URI;
-
-const url = 'http://localhost:8000'
-
-
+const url = import.meta.env.VITE_LOCAL_URI;
 
 
 const createticket = async ({ticketdata}) => {

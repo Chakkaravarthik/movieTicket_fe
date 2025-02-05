@@ -1,4 +1,4 @@
-const URL ='http://localhost:8000'
+const URL = import.meta.env.VITE_LOCAL_URI
 
 
 const theaterget = async()=>{

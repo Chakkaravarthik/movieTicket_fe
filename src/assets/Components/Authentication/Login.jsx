@@ -1,6 +1,6 @@
 import { useState } from "react";
 import RegisterForm from "./register.jsx";
-import userlogin from "../../Apis/authapi/login.js";
+import { userlogin } from "../../Apis/authapi/login.js";
 import { useNavigate } from "react-router-dom";
 
 
