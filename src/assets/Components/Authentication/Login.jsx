@@ -159,7 +159,7 @@ const LoginContent = ({ clickedpopup, clickedRegisterpopup }) => {
         <div className="d-flex flex-column align-items-center justify-content-center" style={{ maxWidth: '50vw' }}>
             <h3 className="text-bg-danger">Movie Ticket Booking Application</h3>
             <p className="lh-lg fw-medium fs-4 text-center">
-                The Movie Ticket Booking App is a user-friendly platform for browsing and booking movie tickets. It features a secure payment gateway for hassle-free transactions and a powerful search functionality to quickly find movies by name, genre, or showtime. Upon booking, users receive automated email notifications with their ticket details for convenience. The app ensures a seamless and reliable experience for movie enthusiasts, combining ease of use with secure payment and notification features.
+            The Movie Ticket Booking App is a seamless platform for booking movie tickets with ease. It features a secure payment gateway for smooth transactions and automated email notifications for confirmed bookings. Users can select their movie, proceed with booking, and complete payments effortlessly. The app ensures a reliable and convenient experience, combining user-friendly navigation with secure payment and confirmation features.
             </p>
             <div>
                 <button className="btn btn-primary fs-4" onClick={() => clickedpopup()}>Login</button>
