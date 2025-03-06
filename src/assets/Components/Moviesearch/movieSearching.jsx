@@ -184,7 +184,7 @@ const MoviePop = ({ moviePopUp, closepop, customerobj , setpopticket ,setticketb
                         <b>Amount Payable (Rs) : {count * moviePopUp.movieticketprice}</b>
                     </p>
                     <button className="btn btn-primary fs-5 m-2 mx-4" onClick={mountingrazorpay}>
-                        Proceed To Pay
+                        Click Here
                     </button>
                     {mountrazorpay && payableAmount > 0 && <Checkout amount={payableAmount} customerobj={customerobj} moviePopUp={moviePopUp} closepop={closepop} count={count}  setpopticket={setpopticket} setticketbookeddata={setticketbookeddata} />}
                 </div>

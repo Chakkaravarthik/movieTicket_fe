@@ -42,7 +42,7 @@ function BarHeading( {handleLogout}) {
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <Companylogo />
-                <MovieSearch />
+                {/* <MovieSearch /> */}
                 <CustomerLoginIcon customerdata={customerdata} handleLogout={handleLogout} ticketpoping={ticketpoping} />
                 {ticketpopup ? <TicketPopUp blockticketpoping={blockticketpoping} /> : <></>}
             </nav>

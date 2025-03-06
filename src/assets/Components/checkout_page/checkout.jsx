@@ -54,7 +54,7 @@ const Checkout = ({ amount, customerobj ,moviePopUp , count , closepop ,  setpop
 
   return (
     <button onClick={payNow} className="btn btn-primary m-3 p-3">
-     Pay ₹{amount}
+     Pay Now ₹{amount}
     </button>
   );
 };
